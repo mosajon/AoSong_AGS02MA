@@ -71,9 +71,10 @@ micro:bit        |      √       |              |             |
 
 ## History
 
+- date  2021-01-31
 - Rewrite author Mosajon
 - version  V1.0
-- date  2021-01-31
+
 
 - Date 2019-7-23
 - Version V0.1
