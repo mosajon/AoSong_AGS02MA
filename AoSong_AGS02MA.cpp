@@ -31,7 +31,7 @@ int AoSong_AGS02MA::begin() {
 }
 
 float AoSong_AGS02MA::readVocPPB() {
-  uint8_t readCMD[2]={0};
+  uint8_t readCMD[1]={0};
   uint8_t data[5] = {0};
   int voc=-10.0;
   readCMD[0] = CMD_DATA_COLLECTION;
@@ -43,12 +43,44 @@ float AoSong_AGS02MA::readVocPPB() {
     //read data from the sensor, check if VOC data got from the check function is correct. 
     //if it is correct, retrun VOC concentration 
     if (checkCRC8(data, 4) == 1) {
-      voc = data[1];
-      voc <<= 8;
-      voc |= data[2];
-      voc <<= 8;
-      voc |= data[3];
-      break;
+      if(data[0]==0x11)
+      {
+        voc = data[1];
+        voc <<= 8;
+        voc |= data[2];
+        voc <<= 8;
+        voc |= data[3];
+        break;
+      }
+    } else {
+      DBG("voc's Crc8 incorrect");
+    }
+  }
+  return voc / 10.0;
+}
+
+float AoSong_AGS02MA::readVocUGM3() {
+  uint8_t readCMD[1]={0};
+  uint8_t data[5] = {0};
+  int voc=-10.0;
+  readCMD[0] = CMD_DATA_COLLECTION;
+  int retries = 10;
+  // when the returned data is wrong, request to get data again until the data is correct. 
+  while(retries--) {
+    writeCommand(readCMD, 1);
+    readData(data, 5);
+    //read data from the sensor, check if VOC data got from the check function is correct. 
+    //if it is correct, retrun VOC concentration 
+    if (checkCRC8(data, 4) == 1) {
+      if(data[0]==0x13)
+      {
+        voc = data[1];
+        voc <<= 8;
+        voc |= data[2];
+        voc <<= 8;
+        voc |= data[3];
+        break;
+      }
     } else {
       DBG("voc's Crc8 incorrect");
     }
@@ -104,12 +136,12 @@ void AoSong_AGS02MA::writeCommand(const void *pBuf, size_t size) {
   }
 
   uint8_t * _pBuf = (uint8_t *)pBuf;
+  _pWire->beginTransmission(AGS02MA_IIC_ADDR);
   for (uint8_t i = 0; i < size; i++) {
-    _pWire->beginTransmission(AGS02MA_IIC_ADDR);
     _pWire->write(_pBuf[i]);
-    _pWire->endTransmission();
    delay(3);
   }
+  _pWire->endTransmission();
 }
 
 uint8_t AoSong_AGS02MA::readData(void *pBuf, size_t size) {
@@ -124,4 +156,20 @@ uint8_t AoSong_AGS02MA::readData(void *pBuf, size_t size) {
   }
   _pWire->endTransmission();
   return 1;
+}
+
+void AoSong_AGS02MA::setMeasureMode(uint8_t Mode)
+{
+  if(Mode==0)//PPB
+  {
+    uint8_t dataMode[6] = {0x00,0x00,0xFF,0x00,0xFF,0x30};
+    writeCommand(dataMode,6);
+  }
+
+  if(Mode==1)//ug/m3
+  {
+    uint8_t dataMode[6] = {0x00,0x02,0xFD,0x02,0xFD,0x00};    
+    writeCommand(dataMode,6);
+  }
+  delay(2000);
 }

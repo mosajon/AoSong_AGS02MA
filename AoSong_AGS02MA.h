@@ -57,15 +57,27 @@ public:
     
   /**
    * @brief Read the concentration of the harmful gas in air
-   * @return Return the read VOC value, unit: ppm.
+   * @return Return the read VOC value, unit: ppb.
    */
     float readVocPPB();
     
+  /**
+   * @brief Read the concentration of the harmful gas in air
+   * @return Return the read VOC value, unit: ug/m3.
+   */
+    float readVocUGM3();
+
   /**
    * @brief Read chip version 
    * @return Return the read version, such as 0x0B.
    */
     int readSensorVersion();
+
+  /**
+   * @brief set Measure Mode 
+   * @param Mode：0 - ppb;1 - ug/m3
+   */
+    void setMeasureMode(uint8_t Mode);
 
 private:
   /**

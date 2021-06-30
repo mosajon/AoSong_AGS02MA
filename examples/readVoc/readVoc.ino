@@ -39,23 +39,25 @@ void setup() {
     @brief Read chip version
   */
   Serial.println(/*version=*/AGS02MA.readSensorVersion(), HEX);
-  
+  AGS02MA.setMeasureMode(0);//0 - ppb;1 - ug/m3
 }
 void loop() {
 
   //Read VOC every 3 seconds, and the interval should be more than 2s since the sampling cycle of the chip >=2s. If it is set to less
   //than 2s, the reading will be one sampled at the last time. 
   //Please pre-heat the deivce for 120s if using it after a long time to get more accurate readings.
-  float voc = AGS02MA.readVocPPB();
+  float voc = AGS02MA.readVocPPB();//0 - ppb
+  //float voc = AGS02MA.readVocUGM3();//1 - ug/m3
   if(voc >= 0){
-  Serial.print("the concentration of Voc:");
-  /*
-    Function name: AGS02MA.readVocPPM()
-    @brief Read the concentration of the harmful gas in air.
-    @return Return the read VOC value, unit: ppm.
-  */
-  Serial.print(/*voc=*/voc);
-  Serial.println(" PPB");
+    Serial.print("the concentration of Voc:");
+    /*
+      Function name: AGS02MA.readVocPPM()
+      @brief Read the concentration of the harmful gas in air.
+      @return Return the read VOC value, unit: ppm.
+    */
+    Serial.print(/*voc=*/voc);
+    Serial.println(" PPB");//0 - ppb
+    //Serial.println(" ug/m3");//1 - ug/m3
   }
   delay(3000);
   
