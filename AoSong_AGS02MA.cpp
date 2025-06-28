@@ -44,15 +44,12 @@ float AoSong_AGS02MA::readVocPPB() {
     //read data from the sensor, check if VOC data got from the check function is correct. 
     //if it is correct, retrun VOC concentration 
     if (checkCRC8(data, 4) == 1) {
-      if(data[0]==0x11)
-      {
-        voc = data[1];
-        voc <<= 8;
-        voc |= data[2];
-        voc <<= 8;
-        voc |= data[3];
-        break;
-      }
+      voc = data[1];
+      voc <<= 8;
+      voc |= data[2];
+      voc <<= 8;
+      voc |= data[3];
+      break;
     } else {
       DBG("voc's Crc8 incorrect");
     }
@@ -73,15 +70,12 @@ float AoSong_AGS02MA::readVocUGM3() {
     //read data from the sensor, check if VOC data got from the check function is correct. 
     //if it is correct, retrun VOC concentration 
     if (checkCRC8(data, 4) == 1) {
-      if(data[0]==0x13)
-      {
-        voc = data[1];
-        voc <<= 8;
-        voc |= data[2];
-        voc <<= 8;
-        voc |= data[3];
-        break;
-      }
+      voc = data[1];
+      voc <<= 8;
+      voc |= data[2];
+      voc <<= 8;
+      voc |= data[3];
+      break;
     } else {
       DBG("voc's Crc8 incorrect");
     }
