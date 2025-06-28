@@ -1,8 +1,6 @@
 # AoSong_AGS02MA
 AGS02MA is a MEMS TVOC gas sensor with a calibrated digital signal output. It uses dedicated digital module acquisition technology and gas sensing sensing technology to ensure high reliability and excellent long-term stability. This MEMS gas sensor features low power consumption, high sensitivity, fast response, high reliability and stability, low cost, and simple drive circuit.
 
- * edit like C:\Users\yourname\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.7.4\cores\esp8266\core_esp8266_si2c.cpp
- * unsigned int preferred_si2c_clock = 30000;
  * 1 PPB =1/1000 PPM
 
 # DFRobot_AGS01DB
