@@ -23,6 +23,7 @@ AoSong_AGS02MA::AoSong_AGS02MA(TwoWire * pWire)
 
 int AoSong_AGS02MA::begin() {
   _pWire->begin();
+  _pWire->setClock(30000);
   //check if the IIC communication works 
   if (_pWire->requestFrom(AGS02MA_IIC_ADDR, 1) != 1) {
     return -1;
