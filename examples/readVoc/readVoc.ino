@@ -33,7 +33,7 @@ void setup() {
   }
   Serial.println("");
   Serial.print("the version of AGS02MA:");
-  Serial.print("0x0");
+  Serial.print("0x");
   /*
     Function name: readSensorVersion()
     @brief Read chip version
