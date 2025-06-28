@@ -31,6 +31,7 @@ void setup() {
     Serial.println("failed to init chip, please check if the chip connection is fine ");
     delay(1000);
   }
+  delay(1000); 
   Serial.println("");
   Serial.print("the version of AGS02MA:");
   Serial.print("0x");
